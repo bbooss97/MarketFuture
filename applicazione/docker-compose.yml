@@ -10,13 +10,16 @@ services:
       MYSQL_ROOT_PASSWORD: example
     ports:
       - 3306:3306
+    volumes:
+      - volume:/mysql
 
   adminer:
-    
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    volumes:
+      - volume:/adminer
 
   app:
     build:
@@ -24,6 +27,8 @@ services:
     depends_on:
       - db
     restart: on-failure
+    volumes:
+      - volume:/app
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -31,4 +36,7 @@ services:
     ports:
         - 5672:5672
         - 15672:15672
-
+    volumes:
+      - volume:/rabbitmq
+volumes:
+  volume:
