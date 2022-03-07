@@ -7,20 +7,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 
-
-def prendiArticoli():
-    response = requests.get("http://localhost:3000/news?argomento=covid")
-    articoli= json.loads(response.text)["results"]
-    print(len(articoli))
-    print(articoli[0].keys())
-    return articoli
-
-def predict(news_headline):
-    data = cv.transform([news_headline]).toarray()
-    print(news_headline)
-    print(model.predict(data))
-
-
 data = pd.read_csv("news.csv")
 
 x = np.array(data["title"])
@@ -31,7 +17,36 @@ xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.2, random_stat
 model = MultinomialNB()
 model.fit(xtrain, ytrain)
 
-predict("""Welfare Dept ready to step in if floods worsen, says minister""")
+#predict("""CBS On Biden COVID Crisis “COVID Anxiety Spiking As COVID Surges Everywhere At Astonishing Speed""")
+
+
+
+def predict(news_headline):
+    data = cv.transform([news_headline]).toarray()
+    print(news_headline)
+    return model.predict(data)
+
+def prendiArticoli(n):
+    response = requests.get("http://localhost:3000/news?argomento=covid")
+    articoli= json.loads(response.text)["data"]
+    titoli=[i["title"]for i in articoli]
+    primi=[]
+    conta=0
+    for i in titoli:
+        if conta>n-1:
+            break
+        if predict(i).item()=="REAL":
+            primi.append(i)
+            conta+=1
+    return primi
+primiarticoli=prendiArticoli(10)
+
+
+query = {'lat':'45', 'lon':'180'}
+response = requests.get('http://api.open-notify.org/iss-pass.json', params=query)
+print(response.json())
+
+
 
 
 

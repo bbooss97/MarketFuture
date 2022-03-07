@@ -50,7 +50,7 @@ metrics.confusion_matrix(y_pred, y_test, labels=['REAL', 'FAKE'])
 
 articoli=prendiArticoli()[1]
 print(articoli)
-predict(["""Welfare Dept ready to step in if floods worsen, says minister"""])
+predict(["""A total of 431 new COVID-19 cases (209 males and 222 females) were recorded by the Best-dos Santos Public Health Laboratory on Friday, February 11, from the 2,013 tests conducted. The positive cases consist of 83 persons under the age of 18, and 348 who are 18 years and older. The number of people in [&#8230;]The post COVID-19 Update: 431 new COVID cases appeared first on Barbados Today."""])
 #predict([articoli["full_description"]])
 
 
