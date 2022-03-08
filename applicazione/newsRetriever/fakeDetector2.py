@@ -1,5 +1,7 @@
+from flask import request
 import requests
 import json
+import time
 
 import pandas as pd
 import numpy as np
@@ -23,11 +25,15 @@ model.fit(xtrain, ytrain)
 
 def predict(news_headline):
     data = cv.transform([news_headline]).toarray()
-    print(news_headline)
+    # print(news_headline)
     return model.predict(data)
 
 def prendiArticoli(n):
-    response = requests.get("http://localhost:3000/news?argomento=covid")
+    argomento="business"
+    site3="http://api.mediastack.com/v1/news?categories="+argomento+"&access_key=61a7781d16ba61e387e61c0c9b8f9418&limit=100&languages=en"
+    #site3="http://api.mediastack.com/v1/news?keywords="+argomento+"&access_key=61a7781d16ba61e387e61c0c9b8f9418&limit=100&languages=en"
+    response=requests.get(site3)
+    #response = requests.get("http://localhost:3000/news?argomento=covid")
     articoli= json.loads(response.text)["data"]
     titoli=[i["title"]for i in articoli]
     primi=[]
@@ -39,12 +45,27 @@ def prendiArticoli(n):
             primi.append(i)
             conta+=1
     return primi
-primiarticoli=prendiArticoli(10)
 
 
-query = {'lat':'45', 'lon':'180'}
-response = requests.get('http://api.open-notify.org/iss-pass.json', params=query)
-print(response.json())
+
+while(True):
+    primiarticoli=prendiArticoli(10)
+    primiarticoli={"articoli":primiarticoli}
+    print(primiarticoli)
+    richiesta=requests.post("http://localhost:3000/news",data=primiarticoli)
+    print(richiesta.text)
+    time.sleep(5)
+
+
+# primiarticoli=prendiArticoli(10)
+# print(primiarticoli)
+# print(len(primiarticoli))
+
+
+
+# query = {'lat':'45', 'lon':'180'}
+# response = requests.get('http://api.open-notify.org/iss-pass.json', params=query)
+# print(response.json())
 
 
 
