@@ -28,7 +28,31 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 //     }
 //     })
 // }
-
+function sendToQueue(msg){
+  var amqp = require('amqplib/callback_api');
+  amqp.connect('amqp://localhost', function(error0, connection) {
+      if (error0) {
+          throw error0;
+      }
+      connection.createChannel(function(error1, channel) {
+          if (error1) {
+              throw error1;
+          }
+          var queue = 'news';
+          // var msg = 'Hello World!';
+          channel.assertQueue(queue, {
+              durable: false
+          });
+          msg=JSON.stringify(msg)
+          channel.sendToQueue(queue, Buffer.from(msg));
+          console.log(" [x] Sent %s", msg);
+      });
+      // setTimeout(function() {
+      //     connection.close();
+      //     process.exit(0);
+      // }, 500);
+  });
+}
 
 
 
@@ -38,5 +62,11 @@ app.post('/news', function (req, res) {
   console.log(articoli)
   res.send("ok")
   //madare articoli nella queue
+  sendToQueue(articoli)
 });
 app.listen(3000);
+
+
+
+
+
