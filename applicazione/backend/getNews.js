@@ -42,9 +42,14 @@ amqp.connect('amqp://localhost', function(error0, connection) {
         channel.consume(queue, function(msg) {
             //console.log(" [x] Received %s", msg.content.toString());
             esegui("delete from news;");
+            msg=msg.content.toString();
             msg=JSON.parse(msg)
-            // articoli=msg["articoli"]
-            // console.log(articoli)
+            articoli=msg["articoli"]
+            console.log(articoli)
+            for (var i=0;i<articoli.length;i++) {
+                articolo=articoli[i].replace("'","''")
+                esegui("insert into news (title) values ('"+articolo+"');")
+            }
         }, {
             noAck: true
         });

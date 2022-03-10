@@ -54,7 +54,7 @@ while(True):
     print(primiarticoli)
     richiesta=requests.post("http://localhost:3000/news",data=primiarticoli)
     print(richiesta.text)
-    time.sleep(5)
+    time.sleep(10)
 
 
 # primiarticoli=prendiArticoli(10)
