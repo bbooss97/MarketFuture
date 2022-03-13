@@ -38,10 +38,17 @@ def prendiArticoli(n):
     titoli=[i["title"]for i in articoli]
     primi=[]
     conta=0
-    for i in titoli:
+    # for i in titoli:
+    #     if conta>n-1:
+    #         break
+    #     if predict(i).item()=="REAL":
+    #         primi.append(i)
+    #         conta+=1
+    # return primi
+    for i in articoli:
         if conta>n-1:
             break
-        if predict(i).item()=="REAL":
+        if predict(i["title"]).item()=="REAL":
             primi.append(i)
             conta+=1
     return primi
@@ -52,7 +59,8 @@ while(True):
     primiarticoli=prendiArticoli(10)
     primiarticoli={"articoli":primiarticoli}
     print(primiarticoli)
-    richiesta=requests.post("http://localhost:3000/news",data=primiarticoli)
+    
+    richiesta=requests.post("http://localhost:3000/news",json=primiarticoli)
     print(richiesta.text)
     time.sleep(10)
 

@@ -22,7 +22,7 @@ function esegui(sql){
       console.log("Result: " + result);
     });
 }
-esegui("create table if not exists news(title text);")
+esegui("create table if not exists news(title text,description text,image text,url text);")
 
 
 
@@ -47,8 +47,18 @@ amqp.connect('amqp://localhost', function(error0, connection) {
             articoli=msg["articoli"]
             console.log(articoli)
             for (var i=0;i<articoli.length;i++) {
-                articolo=articoli[i].replace("'","''")
-                esegui("insert into news (title) values ('"+articolo+"');")
+                title=articoli[i]["title"]
+                description=articoli[i]["description"]
+                image=articoli[i]["image"]
+                url=articoli[i]["url"]
+
+                title=title.replace("'","''")
+                description=description.replace("'","''")
+                if (image!=null){
+                    image=image.replace("'","''")
+                }
+                url=url.replace("'","''")
+                esegui("insert into news (title,description,image,url) values ('"+title+"','"+description+"','"+image+"','"+url+"');")
             }
         }, {
             noAck: true
