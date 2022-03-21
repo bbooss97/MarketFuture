@@ -11,36 +11,50 @@ data=httpGet("http://localhost:5000/getStock/GOOGL")
 data=JSON.parse(data)
 dati=data.dati
 forecast=data.forecast
-console.log(data)
-
+//console.log(data)
+month={
+    "Jan":'01',
+    "Feb":'02',
+    "Mar":'03',
+    "Apr":'04',
+    "May":'05',
+    "Jun":'06',
+    "Jul":'07',
+    "Aug":'08',
+    "Sep":'09',
+    "Oct":'10',
+    "Nov":'11',
+    "Dec":'12'
+}
 x=[]
 y=[]
 x2=[]
 y2=[]
+//loops used to adapt date format of the stocks to the date format month-year
 for (var i=0;i<forecast.length;i++){
-    // date=new Date(forecast[i][0])
-    // mese=date.getMonth()+1
-    // if (mese<10){
-    //     mettizero=true
-    // }
-    // if(mettizero==true){
-    //     stringa=""+date.getFullYear()+"-0"+date.getMonth()+1+"-"+date.getDay()
-    
-    // }else{
-    //     stringa=""+date.getFullYear()+"-"+date.getMonth()+1+"-"+date.getDay()
-    
-    // }
-    x2.push(forecast[i][0])
-    //x2.push(stringa)
+    vecchioFromato=forecast[i][0]
+    anno=vecchioFromato.slice(12,16)
+    giorno=vecchioFromato.slice(5,7)
+    mese=month[vecchioFromato.slice(8,11)]
+    nuovoFormato=anno+"-"+mese+"-"+giorno
+    x2.push(nuovoFormato)
     y2.push(forecast[i][1])
 }
 for (var i=0;i<dati.length;i++){
-    x.push(dati[i][0])
+    vecchioFromato=dati[i][0]
+    anno=vecchioFromato.slice(12,16)
+    giorno=vecchioFromato.slice(5,7)
+    mese=month[vecchioFromato.slice(8,11)]
+    nuovoFormato=anno+"-"+mese+"-"+giorno
+    x.push(nuovoFormato)
     y.push(dati[i][1])
 }
-console.log(y)
+//console.log(y)
 prova={"x":x,"y":y,"type":"scatter"}
-
+var z = []
+for (var i=0;i < x.length; i++){
+    z.push(x[i].slice(8,16))
+}
 var trace1 = {
     type: "scatter",
     mode: "lines",
@@ -59,15 +73,12 @@ var trace1 = {
     line: {color: '#7F7F7F'}
   }
 valori=[trace1,trace2]
-var layout = {
-    title: 'Basic Time Series',
-  };
 
 var layout2 = {
 title: 'Time Series with Rangeslider',
 xaxis: {
     autorange: true,
-    range: ['2015-02-17', '2017-02-16'],
+    range: ['2015-01-01', '2024-01-01'],
     rangeselector: {buttons: [
         {
         count: 1,
@@ -83,7 +94,7 @@ xaxis: {
         },
         {step: 'all'}
     ]},
-    rangeslider: {range: ['2015-02-17', '2017-02-16']},
+    rangeslider: {range: ['2015-01-01', '2024-01-01']},
     type: 'date'
 },
 yaxis: {
@@ -94,5 +105,4 @@ yaxis: {
 };
   
 tester = document.getElementById('tester');
-//Plotly.newPlot("tester", [prova]);
-Plotly.newPlot('tester',valori,layout)
+Plotly.newPlot('tester',valori,layout2)

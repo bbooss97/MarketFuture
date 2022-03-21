@@ -13,7 +13,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   unset: 'destroy',
-  store: store,
+  // store: store,
   name: 'logged',
   genid: (req) => {
       // Restituire un ID identificativo casuale per la sessione
@@ -21,6 +21,24 @@ app.use(session({
 }));
 
 var mysql = require('mysql');
+
+const Mysql = require('sync-mysql') 
+
+
+const connection = new Mysql({ 
+  host: "sql-db-1",
+  database: "mysql",
+  port: "3306",
+  user: "root",
+  password: "example"
+}) 
+  
+
+function esegui2(sql) {
+  var result = connection.query(sql) 
+  return result
+}
+
 
 var con = mysql.createConnection({
   host: "sql-db-1",
@@ -40,7 +58,7 @@ con.connect(function(err) {
 function esegui(sql){
     con.query(sql, function (err, result) {
       if (err) throw err;
-      console.log("Result: " + result);
+      console.log(result);
     });
 }
 esegui("create table if not exists users(username text,email text,password text);")
@@ -57,13 +75,44 @@ esegui("create table if not exists users(username text,email text,password text)
 // })
 
 app.get("/",function (req, res) {
+//res.sendFile(__dirname+"/index.html")
   if(!req.session.user) {
     res.redirect('/login');
   } else {
     res.sendFile(__dirname+"/index.html")
-}
-  
+  }
 })
+
+app.get("/getNews",function (req, res) {
+  ris=esegui2("select * from news")
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(ris));
+})
+  
+
+
+
+
+
+app.get("/predictor",function (req, res) {
+  //res.sendFile(__dirname+"/index.html")
+    if(!req.session.user) {
+      res.redirect('/login');
+    } else {
+      res.sendFile(__dirname+"/predictor.html")
+  }
+  })
+  
+
+
+
+app.get("/index.js",function (req, res) {
+  res.sendFile(__dirname+"/index.js")
+})
+app.get("/blog.css",function (req, res) {
+  res.sendFile(__dirname+"/index.js")
+})
+
 
 app.post('/register', async (req, res) => {
 
