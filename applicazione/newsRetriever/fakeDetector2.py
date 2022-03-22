@@ -2,6 +2,7 @@ from flask import request
 import requests
 import json
 import time
+import random
 
 import pandas as pd
 import numpy as np
@@ -45,6 +46,7 @@ def prendiArticoli(n):
     #         primi.append(i)
     #         conta+=1
     # return primi
+    random.shuffle(articoli)
     for i in articoli:
         if conta>n-1:
             break
@@ -62,7 +64,7 @@ while(True):
     
     richiesta=requests.post("http://localhost:3000/news",json=primiarticoli)
     print(richiesta.text)
-    time.sleep(10)
+    time.sleep(30)
 
 
 # primiarticoli=prendiArticoli(10)
