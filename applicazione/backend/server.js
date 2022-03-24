@@ -10,14 +10,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 })); 
 app.use(session({
   secret: 'token segreto',
-  resave: false,
-  saveUninitialized: true,
-  unset: 'destroy',
-  // store: store,
-  name: 'logged',
-  genid: (req) => {
-      // Restituire un ID identificativo casuale per la sessione
-  }
+  cookie: {}
+
 }));
 
 var mysql = require('mysql');
@@ -76,6 +70,7 @@ esegui("create table if not exists users(username text,email text,password text)
 
 app.get("/",function (req, res) {
 //res.sendFile(__dirname+"/index.html")
+  //console.log(req.session.user)
   if(!req.session.user) {
     res.redirect('/login');
   } else {
@@ -110,26 +105,49 @@ app.get("/index.js",function (req, res) {
   res.sendFile(__dirname+"/index.js")
 })
 app.get("/blog.css",function (req, res) {
-  res.sendFile(__dirname+"/index.js")
+  res.sendFile(__dirname+"/blog.css")
+})
+app.get("/login",function (req, res) {
+  res.sendFile(__dirname+"/login.html")
+})
+app.get("/login.css",function (req, res) {
+  res.sendFile(__dirname+"/login.css")
 })
 
 
-app.post('/register', async (req, res) => {
-
-  //esegui("inserisci in tabeella users")
+app.post('/registrami', async (req, res) => {
+  dati=req.body
+  username=dati["username"]
+  email=dati["email"]
+  password=dati["password"]
   
+  //esegui("inserisci in tabeella users")
+  query="insert into users(username,email,password) values('"+username+"','"+email+"','"+password+"')"
+  risultati=esegui2(query)
+  res.redirect('/login')
 });
 
-app.post('/login', async (req, res) => {
+app.post('/loggami', async (req, res) => {
   try {
-      let user = await db.users.findOne({email: req.body.email});
-      if(user !== null) {
+      //let user = await db.users.findOne({email: req.body.email});
+      //user=esegui2("select")
+      dati=req.body
+      email=dati["email"]
+      password=dati["password"]
+      query="select username,email from users where email='"+email+"' and password='"+password+"'"
+      risultati=esegui2(query)
+      //console.log(risultati)
+      
+      if(risultati.length > 0) {
+        
           req.session.user = {
-                email: user.email,
-                name: user.name
+                email: risultati[0].email,
+                name: risultati[0].username
           };
+          
           res.redirect('/');
       } else {
+        res.redirect("/login")
          // Login non valido
       }
   } catch(err) {
@@ -137,12 +155,12 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/logout', (req, res) => {
+app.get('/sloggami', (req, res) => {
   if(req.session.user) {
       delete req.session.user;
       res.redirect('/login');
   } else {
-      res.redirect('/');
+      res.redirect('/login');
   }        
 });
 
