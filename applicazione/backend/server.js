@@ -164,9 +164,53 @@ app.get('/sloggami', (req, res) => {
   }        
 });
 
+app.get("/admin",function (req, res) {
+    if (!req.session.user){
+      res.redirect('/login');
+    }else if ( req.session.user["name"]!="admin"){
+      res.redirect('/');
+    } else {
+      res.sendFile(__dirname+"/admin.html")
+    }
+
+  })
+app.post("/deleteUser",function (req, res) {
+  if ( req.session.user["name"]!="admin"){
+    res.redirect('/');
+  } else {
+    email=req.body.email
+    esegui2("delete from users where email = '"+email+"'")
+    res.redirect("/admin")
+  }
+})
+
+app.post("/deleteUserFromUsername",function (req, res) {
+  if ( req.session.user["name"]!="admin"){
+    res.redirect('/');
+  } else {
+    username=req.body.username
+    esegui2("delete from users where username = '"+username+"'")
+    res.redirect("/admin")
+  }
+})
+
+app.get("/numberOfUsers",function (req, res) {
+  if ( req.session.user["name"]!="admin"){
+    res.redirect('/');
+  } else {
+    dati=esegui2("select count(*) as conta from users")
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(dati));
+  }
+})
+
 app.listen(3001);
 
 
-
+app.get("/getUsers",function (req, res) {
+  ris=esegui2("select username from users")
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(ris));
+})
 
 
