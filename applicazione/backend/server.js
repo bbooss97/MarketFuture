@@ -98,6 +98,16 @@ app.get("/predictor",function (req, res) {
   }
   })
   
+app.get("/predictor.js",function (req, res) {
+  //res.sendFile(__dirname+"/index.html")
+    if(!req.session.user) {
+      res.redirect('/login');
+    } else {
+      res.sendFile(__dirname+"/predictor.js")
+  }
+  })
+  
+  
 
 
 
@@ -203,14 +213,14 @@ app.get("/numberOfUsers",function (req, res) {
     res.end(JSON.stringify(dati));
   }
 })
-
-app.listen(3001);
-
-
 app.get("/getUsers",function (req, res) {
   ris=esegui2("select username from users")
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(ris));
 })
+
+
+app.listen(3001);
+
 
 
