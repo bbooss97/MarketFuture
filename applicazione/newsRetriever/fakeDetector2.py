@@ -1,4 +1,4 @@
-from flask import request
+
 import requests
 import json
 import time
@@ -64,7 +64,7 @@ while(True):
     
     richiesta=requests.post("http://localhost:3000/news",json=primiarticoli)
     print(richiesta.text)
-    time.sleep(30)
+    time.sleep(60)
 
 
 # primiarticoli=prendiArticoli(10)
