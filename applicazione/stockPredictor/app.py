@@ -3,9 +3,9 @@ from datetime import date
 import yfinance as yf
 from fbprophet import Prophet
 from flask import jsonify
-
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app)
 START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
 
@@ -29,6 +29,7 @@ def get_stock(stock):
     
     #send both data back
     all_data = {"dati" : data.values.tolist() , "forecast" : forecast.values.tolist()}
+    
     return all_data
 
 
