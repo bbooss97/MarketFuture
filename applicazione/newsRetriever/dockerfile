@@ -9,7 +9,7 @@ RUN pip install -U scikit-learn;exit 0
 RUN npm install express;exit 0
 RUN npm install request;exit 0
 RUN npm install body-parser;exit 0
+RUN npm install amqplib
 
-
-CMD ["python","-m","flask","run","--host=0.0.0.0"]
-# docker run -p 5000:5000 id_image
+CMD node server.js & python fakeDetector2.py
+# docker run -p 5000:5000 id_imageg

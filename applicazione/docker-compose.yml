@@ -3,6 +3,7 @@ version: '3.1'
 
 services:
   db:
+    network_mode: host
     image: mysql
     container_name: "db"
     command: --default-authentication-plugin=mysql_native_password
@@ -15,6 +16,7 @@ services:
       - volume:/mysql
 
   adminer:
+    network_mode: host
     container_name: "adminer"
     image: adminer
     restart: always
@@ -31,8 +33,33 @@ services:
   #   restart: on-failure
   #   volumes:
   #     - volume:/app
+  # fakedetector:
+  #   container_name: "fakedetector"
+  #   image: bbooss97/fakedetector
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - db
+  #     - rabbitmq
+  #   restart: on-failure
+  #   volumes:
+  #     - volume:/fakedetector
+
+  fakedetector:
+    container_name: "fakedetector"
+    network_mode: host
+    image: bbooss97/fakedetector
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - rabbitmq
+    restart: on-failure
+    volumes:
+      - volume:/fakedetector
 
   stockpredictor:
+    network_mode: host
     image: bbooss97/stockpredictorimage
     container_name: "stockpredictor"
     restart: on-failure
@@ -44,6 +71,7 @@ services:
       - volume:/stockpredictor
 
   rabbitmq:
+    network_mode: host
     container_name: 'rabbitmq'
     image: rabbitmq:3-management-alpine
     #container_name: 'rabbitmq'
