@@ -56,6 +56,7 @@ function esegui(sql){
     });
 }
 esegui("create table if not exists users(username text,email text,password text);")
+esegui("create table if not exists stocks(nomeStock text);")
 
 
 // app.get("*",function (req, res) {
@@ -113,6 +114,9 @@ app.get("/predictor.js",function (req, res) {
 
 app.get("/index.js",function (req, res) {
   res.sendFile(__dirname+"/index.js")
+})
+app.get("/listaStocks.js",function (req, res) {
+  res.sendFile(__dirname+"/listaStocks.js")
 })
 app.get("/blog.css",function (req, res) {
   res.sendFile(__dirname+"/blog.css")
@@ -217,6 +221,37 @@ app.get("/getUsers",function (req, res) {
   ris=esegui2("select username from users")
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(ris));
+})
+
+
+
+app.get("/getStocksList",function (req, res) {
+  ris=esegui2("select nomeStock from stocks")
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(ris));
+})
+
+app.post("/deleteStockFromName",function (req, res) {
+  if ( req.session.user["name"]!="admin"){
+    res.redirect('/');
+  } else {
+    nome=req.body.nomeStock
+    esegui2("delete from stocks where nomeStock  = '"+nome+"'")
+    res.redirect("/admin")
+  }
+})
+
+app.post("/addStock",function (req, res) {
+  if ( req.session.user["name"]!="admin"){
+    res.redirect('/');
+  } else {
+    nome=req.body.nomeStock
+    if (nome.length>0){
+      esegui2("insert into stocks(nomeStock) values ('"+nome+"') ")
+      
+    }
+    res.redirect("/admin") 
+  }
 })
 
 

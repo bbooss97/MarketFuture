@@ -33,6 +33,36 @@
             </div>
         </div>
       </form>
+
+      <form method="POST" name="dati" action="/addStock"  class="row g-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                        <input type="text"  name="nomeStock" class="form-control-plaintext" id="addStockInput" placeholder="GOOGL" value="">
+                </div>
+            <div class="col-6">
+                    <button type="submit" onclick="alert('sicuro??')" class="btn btn-primary mb-3">Aggiungi Stock</button>
+               
+            </div>
+        </div>
+      </form>
+
+      <form method="POST" name="dati" action="/deleteStockFromName"  class="row g-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                        <input type="text"  name="nomeStock" class="form-control-plaintext" id="deleteStockInput" placeholder="GOOGL" value="">
+                </div>
+            <div class="col-6">
+                    <button type="submit" onclick="alert('sicuro??')" class="btn btn-primary mb-3">Rimuovi Stock</button>
+               
+            </div>
+        </div>
+      </form>
+
+
+
+
     <div class="row mb-2" id="myusers"></div>
     <script>
         function httpGet(theUrl){
@@ -100,5 +130,9 @@
                 telement.innerHTML=elemento
                 inserimento.appendChild(telement)
     </script>
+
+
+
+
 </body>
 </html>

@@ -109,8 +109,22 @@ function prendistock(nomeStock){
     Plotly.newPlot('tester',valori,layout2)
 }
 
-
 selettore= document.getElementById("selettore")
+listaStocks=JSON.parse(httpGet("/getStocksList"))
+set=new Set();
+listaStocks.forEach(element => {
+    set.add(element["nomeStock"])
+})
+
+set.forEach(element => {
+    telement=document.createElement("option")
+    telement.setAttribute("value",element)
+    telement.innerHTML=element
+    selettore.appendChild(telement)
+});
+
+
+
 
 selettore.addEventListener("change",function(){
     valore=selettore.value
