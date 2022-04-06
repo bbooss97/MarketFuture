@@ -57,6 +57,7 @@ function esegui(sql){
 }
 esegui("create table if not exists users(username text,email text,password text);")
 esegui("create table if not exists stocks(nomeStock text);")
+esegui("create table if not exists bannedNews(titolo text);")
 
 
 // app.get("*",function (req, res) {
@@ -153,12 +154,10 @@ app.post('/loggami', async (req, res) => {
       //console.log(risultati)
       
       if(risultati.length > 0) {
-        
           req.session.user = {
                 email: risultati[0].email,
                 name: risultati[0].username
           };
-          
           res.redirect('/');
       } else {
         res.redirect("/login")
@@ -231,6 +230,8 @@ app.get("/getStocksList",function (req, res) {
   res.end(JSON.stringify(ris));
 })
 
+
+
 app.post("/deleteStockFromName",function (req, res) {
   if ( req.session.user["name"]!="admin"){
     res.redirect('/');
@@ -254,6 +255,41 @@ app.post("/addStock",function (req, res) {
   }
 })
 
+app.get("/session",function (req, res) {
+  sessione=req.session.user;
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(sessione))
+})
+
+
+app.get("/bannedNews",function (req, res) {
+  ris=esegui2("select titolo from bannedNews")
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(ris));
+})
+
+app.post("/addBannedNews",function (req, res) {
+  if ( req.session.user["name"]!="admin"){
+    res.redirect('/');
+  } else {
+    nome=req.body.titolo
+    if (nome.length>0){
+      esegui2("insert into bannedNews(titolo) values ('"+nome+"') ")
+      
+    }
+    res.redirect("/") 
+  }
+})
+
+app.post("/deleteBannedNews",function (req, res) {
+  if ( req.session.user["name"]!="admin"){
+    res.redirect('/');
+  } else {
+    nome=req.body.titolo
+    esegui2("delete from bannedNews where titolo  = '"+nome+"'")
+    res.redirect("/admin")
+  }
+})
 
 app.listen(3001);
 
