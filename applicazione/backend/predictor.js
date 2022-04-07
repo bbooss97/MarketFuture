@@ -11,6 +11,7 @@ function prendistock(nomeStock){
     data=httpGet("http://localhost:5000/getStock/"+nomeStock)
     data=JSON.parse(data)
     dati=data.dati
+    console.log(dati)
     forecast=data.forecast
     //console.log(data)
     month={

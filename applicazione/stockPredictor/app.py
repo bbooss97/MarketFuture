@@ -4,6 +4,7 @@ import yfinance as yf
 from fbprophet import Prophet
 from flask import jsonify
 from flask_cors import CORS
+from flask import send_file
 app = Flask(__name__)
 CORS(app)
 START = "2015-01-01"
@@ -29,9 +30,12 @@ def get_stock(stock):
     
     #send both data back
     all_data = {"dati" : data.values.tolist() , "forecast" : forecast.values.tolist()}
-    
+    m.plot_components(forecast).savefig('./grafici.png')
     return all_data
 
+@app.route("/prendiGrafici")
+def getGrafici():
+    return send_file("./grafici.png")
 
 
 
