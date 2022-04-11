@@ -58,7 +58,7 @@ function esegui(sql){
 esegui("create table if not exists users(username text,email text,password text);")
 esegui("create table if not exists stocks(nomeStock text);")
 esegui("create table if not exists bannedNews(titolo text);")
-
+esegui("create table if not exists news(title text,description text,image text,url text);")
 
 // app.get("*",function (req, res) {
 //     url=req.url

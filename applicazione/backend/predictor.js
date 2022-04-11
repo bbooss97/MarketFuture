@@ -107,27 +107,47 @@ function prendistock(nomeStock){
     };
     
     tester = document.getElementById('tester');
+    tester.innerHTML=""
     Plotly.newPlot('tester',valori,layout2)
 }
 
-selettore= document.getElementById("selettore")
-listaStocks=JSON.parse(httpGet("/getStocksList"))
-set=new Set();
-listaStocks.forEach(element => {
-    set.add(element["nomeStock"])
-})
+function changeListStock(){
+    selettore= document.getElementById("selettore")
+    listaStocks=JSON.parse(httpGet("/getStocksList"))
+    set=new Set();
+    listaStocks.forEach(element => {
+        set.add(element["nomeStock"])
+    })
 
-set.forEach(element => {
-    telement=document.createElement("option")
-    telement.setAttribute("value",element)
-    telement.innerHTML=element
-    selettore.appendChild(telement)
-});
+    set.forEach(element => {
+        telement=document.createElement("option")
+        telement.setAttribute("value",element)
+        telement.innerHTML=element
+        selettore.appendChild(telement)
+    });
 
+}
 
+changeListStock()
 
+versione=0
 
 selettore.addEventListener("change",function(){
+    versione++
+    selettore= document.getElementById("selettore")
     valore=selettore.value
+    if(valore=="Open this select menu"){
+        return
+    }
     prendistock(valore)
+
+    selettore=document.getElementById("tester")
+
+
+    componentElement='http://localhost:5000/prendiGrafici?versione='+versione
+    telement=document.createElement("img")
+    telement.setAttribute("src",componentElement)
+    
+    selettore.appendChild(telement)
+    
 })
