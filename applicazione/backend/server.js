@@ -20,7 +20,7 @@ const Mysql = require('sync-mysql')
 
 
 const connection = new Mysql({ 
-  host: "sql-db-1",
+  host: "db",
   database: "mysql",
   port: "3306",
   user: "root",
@@ -35,7 +35,7 @@ function esegui2(sql) {
 
 
 var con = mysql.createConnection({
-  host: "sql-db-1",
+  host: "db",
   database: "mysql",
   port: "3306",
   user: "root",

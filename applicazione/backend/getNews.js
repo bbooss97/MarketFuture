@@ -2,7 +2,7 @@ var amqp = require('amqplib/callback_api');
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-  host: "sql-db-1",
+  host: "db",
   database: "mysql",
   port: "3306",
   user: "root",
@@ -26,7 +26,7 @@ esegui("create table if not exists news(title text,description text,image text,u
 
 
 
-amqp.connect('amqp://localhost', function(error0, connection) {
+amqp.connect('amqp://rabbitmq:5672', function(error0, connection) {
     if (error0) {
         throw error0;
     }

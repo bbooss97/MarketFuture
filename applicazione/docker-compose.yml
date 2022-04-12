@@ -15,8 +15,8 @@ services:
     volumes:
       - volume:/mysql
 
+
   adminer:
-    
     container_name: "adminer"
     image: adminer
     restart: always
@@ -25,29 +25,21 @@ services:
     volumes:
       - volume:/adminer
 
-  # app:
-  #   build:
-  #     dockerfile: /Dockerfile
-  #   depends_on:
-  #     - db
-  #   restart: on-failure
-  #   volumes:
-  #     - volume:/app
-  # fakedetector:
-  #   container_name: "fakedetector"
-  #   image: bbooss97/fakedetector
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - db
-  #     - rabbitmq
-  #   restart: on-failure
-  #   volumes:
-  #     - volume:/fakedetector
+
+  backend:
+    container_name: "backend"
+    image: bbooss97/backend
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+      - rabbitmq
+    restart: on-failure
+    volumes:
+      - volume:/backend
 
   fakedetector:
     container_name: "fakedetector"
-    
     image: bbooss97/fakedetector
     ports:
       - 3000:3000
@@ -58,8 +50,8 @@ services:
     volumes:
       - volume:/fakedetector
 
+
   stockpredictor:
-    
     image: bbooss97/stockpredictorimage
     container_name: "stockpredictor"
     restart: on-failure
@@ -70,11 +62,10 @@ services:
     volumes:
       - volume:/stockpredictor
 
+
   rabbitmq:
-    
     container_name: 'rabbitmq'
     image: rabbitmq:3-management-alpine
-    #container_name: 'rabbitmq'
     ports:
         - 5672:5672
         - 15672:15672
@@ -82,3 +73,4 @@ services:
       - volume:/rabbitmq
 volumes:
   volume:
+
