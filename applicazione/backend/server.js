@@ -116,6 +116,9 @@ app.get("/predictor.js",function (req, res) {
 app.get("/index.js",function (req, res) {
   res.sendFile(__dirname+"/index.js")
 })
+app.get("/index.css",function (req, res) {
+  res.sendFile(__dirname+"/index.css")
+})
 app.get("/listaStocks.js",function (req, res) {
   res.sendFile(__dirname+"/listaStocks.js")
 })

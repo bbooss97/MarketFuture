@@ -1,3 +1,19 @@
+
+// $(function(){
+//     var str = '#len'; //increment by 1 up to 1-nelemnts
+//     $(document).ready(function(){
+//       var i, stop;
+//       i = 1;
+//       stop = 4; //num elements
+//       setInterval(function(){
+//         if (i > stop){
+//           return;
+//         }
+//         $('#len'+(i++)).toggleClass('bounce');
+//       }, 500)
+//     });
+//   });
+
 function httpGet(theUrl)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -101,3 +117,10 @@ for (var i=0; i<data.length;i++) {
     inserimento.appendChild(telement.firstChild)
 }
 
+if(sonoAdmin){
+    console.log("inserisco tasto admmin")
+    elementoTemporaneo=document.createElement("div")
+    adminButton='<li><a href="/admin" class="nav-item nav-link">Admin</a></li>'
+    elementoTemporaneo.innerHTML=adminButton
+    document.getElementById("barra").appendChild(elementoTemporaneo.firstChild)
+}
