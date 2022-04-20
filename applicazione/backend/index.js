@@ -21,6 +21,17 @@ function httpGet(theUrl)
     xmlHttp.send(  );
     return xmlHttp.responseText;
 }
+
+imageList=["https://www.lavoripubblici.it/img-news/2022/def-2022.jpg","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1fTJLHA3UYdent4nXJbbNL4C2wnPlWIDKXg&usqp=CAU",
+"https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+"https://utechia.com/wp-content/uploads/2021/11/business-foto.jpeg",
+"https://intermediarioeconomico.it/wp-content/uploads/2020/11/setup.jpg",
+"https://www.icpinformatica.it/wp-content/uploads/2019/07/agenda-analysis-business-990818.jpg",
+"https://fdmservices.it/wp-content/uploads/2018/10/adobestock_88110318web-1024x683.jpg",
+"https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/10/business_with_esa/21093947-3-eng-GB/Business_with_ESA_pillars.jpg",
+"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnwIZuuVNJ3DMlxV92_xjPSbAWXYORXrIx8w&usqp=CAU%E2%80%9D"
+]
+
 nomeUtente=httpGet("http://localhost:3001/session");
 nomeUtente=JSON.parse(nomeUtente)["name"];
 sonoAdmin="admin"==nomeUtente
@@ -71,7 +82,8 @@ for (var i=0; i<data.length;i++) {
             </div>
             <img class="card-img-right flex-auto d-none d-md-block" src="`
             if (immagine=="null"){
-                elemento+=defaultImage+`" width="200" height="250" alt="Card image cap">
+                immagineSelezionata=Math.floor(Math.random() * imageList.length);
+                elemento+=imageList[immagineSelezionata]+`" width="200" height="250" alt="Card image cap">
                 </div>
                 </div>`
             }else{
