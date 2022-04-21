@@ -60,6 +60,12 @@ esegui("create table if not exists stocks(nomeStock text);")
 esegui("create table if not exists bannedNews(titolo text);")
 esegui("create table if not exists news(title text,description text,image text,url text);")
 
+esegui("delete from stocks")
+esegui("insert into stocks(nomeStock) values ('GOOGL') ")
+esegui("insert into stocks(nomeStock) values ('META') ")
+esegui("insert into stocks(nomeStock) values ('AMZN') ")
+esegui("insert into stocks(nomeStock) values ('TSLA') ")
+
 // app.get("*",function (req, res) {
 //     url=req.url
 //     console.log(url)
@@ -130,6 +136,9 @@ app.get("/login",function (req, res) {
 })
 app.get("/login.css",function (req, res) {
   res.sendFile(__dirname+"/login.css")
+})
+app.get("/predictor.css",function (req, res) {
+  res.sendFile(__dirname+"/predictor.css")
 })
 
 

@@ -131,8 +131,8 @@ function changeListStock(){
 changeListStock()
 
 versione=0
-
-selettore.addEventListener("change",function(){
+//selettore
+document.getElementById("bottonePredict").addEventListener("click",function(){
     versione++
     selettore= document.getElementById("selettore")
     valore=selettore.value

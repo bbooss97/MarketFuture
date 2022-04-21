@@ -28,7 +28,7 @@ services:
 
   backend:
     container_name: "backend"
-    image: bbooss97/backend
+    image: bbooss97/backend:latest
     ports:
       - 3001:3001
     depends_on:
@@ -40,7 +40,7 @@ services:
 
   fakedetector:
     container_name: "fakedetector"
-    image: bbooss97/fakedetector
+    image: bbooss97/fakedetector:latest
     ports:
       - 3000:3000
     depends_on:
@@ -52,7 +52,7 @@ services:
 
 
   stockpredictor:
-    image: bbooss97/stockpredictorimage
+    image: bbooss97/stockpredictorimage:latest
     container_name: "stockpredictor"
     restart: on-failure
     depends_on: 

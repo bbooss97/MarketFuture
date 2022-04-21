@@ -9,7 +9,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 print("fakedetector avviato")
-time.sleep(5)
+#cambia lo sleep a 20
+time.sleep(20)
 data = pd.read_csv("news.csv")
 
 x = np.array(data["title"])
