@@ -140,6 +140,13 @@ app.get("/login.css",function (req, res) {
 app.get("/predictor.css",function (req, res) {
   res.sendFile(__dirname+"/predictor.css")
 })
+app.get("/admin.js",function (req, res) {
+  res.sendFile(__dirname+"/admin.js")
+})
+
+
+
+
 
 
 app.post('/registrami', async (req, res) => {
@@ -223,7 +230,7 @@ app.get("/numberOfUsers",function (req, res) {
   if ( req.session.user["name"]!="admin"){
     res.redirect('/');
   } else {
-    dati=esegui2("select count(*) as conta from users")
+    dati=esegui2("select count(distinct username) as conta from users")
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(dati));
   }
