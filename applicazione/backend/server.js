@@ -66,6 +66,12 @@ esegui("insert into stocks(nomeStock) values ('META') ")
 esegui("insert into stocks(nomeStock) values ('AMZN') ")
 esegui("insert into stocks(nomeStock) values ('TSLA') ")
 
+esegui("insert into users(username,email,password) values('admin','admin@admin.com','admin')")
+esegui("insert into users(username,email,password) values('lorenzo','lorenzo@gmail.com','lorenzo')")
+esegui("insert into users(username,email,password) values('andrea','andrea@gmail.com','andrea')")
+esegui("insert into users(username,email,password) values('giorgio','giorgio@gmail.com','giorgio')")
+esegui("insert into users(username,email,password) values('luca','luca@gmail.com','luca')")
+
 // app.get("*",function (req, res) {
 //     url=req.url
 //     console.log(url)
