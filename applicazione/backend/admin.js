@@ -65,6 +65,6 @@ inserimento.appendChild(telement)
 
 
 
-document.getElementById("descrizione").innerHTML+="<br>Il numero di utenti è : "+valore
+document.getElementById("descrizione").innerHTML+="<br>The number of active users of the application is : "+valore
 
 

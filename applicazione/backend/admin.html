@@ -41,13 +41,16 @@
       </nav>
       <div class="banner">
         <div class="container">
-          <h1>Market Future: migliora i tuoi investimenti</h1>
-          <p id="descrizione">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec elit ex. Etiam elementum lectus et tempor molestie.
+          <h1>Market Future: an application to improve your investments</h1>
+          <p id="descrizione">
+            This panel allows the admin of the application to ban ban some users by their mails or by selecting manually them in the table presented below,
+            or adding and removing stocks that will be available to the stock predictor.
+
           </p>
         </div>
         
         <div class="container">
-            <form method="POST" name="dati" action="/deleteUser"  class="row g-3" >
+            <form method="POST" name="dati" action="/deleteUser" id="form1" class="row g-3" >
                 <div class="container">
                     <div class="row">
                         <div class="col-6">
@@ -58,33 +61,33 @@
                         </div>
                     <div class="col-6">
                         
-                            <button type="submit"  class="btn btn-primary mb-3" onclick="alert('sicuro')">Elimina Utente</button>
+                            <button  type="button" class="btn btn-primary mb-3" onclick="if (confirm('Are you sure?')){document.getElementById('form1').submit()}else{}">Remove user</button>
 
                     </div>
                 </div>
               </form>
               <br>
-              <form method="POST" name="dati" action="/addStock"  class="row g-3">
+              <form method="POST" name="dati" action="/addStock"  id="form2" class="row g-3">
                 <div class="container">
                     <div class="row">
                         <div class="col-6">
                                 <input type="text"  name="nomeStock" class="form-control-plaintext" id="addStockInput" placeholder="GOOGL" value="" style="border-radius: 10px; background-color : #ffffff; ">
                         </div>
                     <div class="col-6">
-                            <button type="submit" onclick="alert('sicuro??')" class="btn btn-primary mb-3">Aggiungi Stock</button>
+                            <button type="button" onclick="if (confirm('Are you sure?')){document.getElementById('form2').submit()}else{}" class="btn btn-primary mb-3">Insert Stock</button>
                        
                     </div>
                 </div>
               </form>
               <br>
-              <form method="POST" name="dati" action="/deleteStockFromName"  class="row g-3">
+              <form method="POST" name="dati" action="/deleteStockFromName"  id="form3" class="row g-3">
                 <div class="container">
                     <div class="row">
                         <div class="col-6">
                                 <input type="text"  name="nomeStock" class="form-control-plaintext" id="deleteStockInput" placeholder="GOOGL" value="" style="border-radius: 10px; background-color : #ffffff; ">
                         </div>
                     <div class="col-6">
-                            <button type="submit" onclick="alert('sicuro??')" class="btn btn-primary mb-3">Rimuovi Stock</button>
+                            <button type="button" onclick="if (confirm('Are you sure?')){document.getElementById('form3').submit()}else{}" class="btn btn-primary mb-3">Remove Stock</button>
                        
                     </div>
                 </div>
@@ -108,6 +111,7 @@
     
     <script src="/admin.js"></script>
 
+    <br><br>
     
 
 </body>

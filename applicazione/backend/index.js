@@ -106,7 +106,7 @@ for (var i=0; i<data.length;i++) {
                 <h3 class="mb-0">
                 <a class="text-dark" style="text-decoration: none;" >`+titolo+`</a>
                 </h3>
-                <div class="mb-1 text-muted">Nov 11</div>
+                <br>
                 
                 <a href="`+link+`">Continue reading</a>
             </div>
