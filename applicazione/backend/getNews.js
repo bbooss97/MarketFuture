@@ -10,7 +10,6 @@ var con = mysql.createConnection({
 });
 a=1
 
-
 con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
@@ -23,8 +22,6 @@ function esegui(sql){
     });
 }
 esegui("create table if not exists news(title text,description text,image text,url text);")
-
-
 
 amqp.connect('amqp://rabbitmq:5672', function(error0, connection) {
     if (error0) {
@@ -40,7 +37,6 @@ amqp.connect('amqp://rabbitmq:5672', function(error0, connection) {
         });
         console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
         channel.consume(queue, function(msg) {
-            //console.log(" [x] Received %s", msg.content.toString());
             esegui("delete from news;");
             msg=msg.content.toString();
             msg=JSON.parse(msg)
@@ -52,12 +48,15 @@ amqp.connect('amqp://rabbitmq:5672', function(error0, connection) {
                 image=articoli[i]["image"]
                 url=articoli[i]["url"]
 
-                title=title.replace("'","''")
-                description=description.replace("'","''")
+                title=title.replace(/'/g,"''")
+                description=description.replace(/'/g,"''")
                 if (image!=null){
-                    image=image.replace("'","''")
+                    image=image.replace(/'/g,"''")
                 }
-                url=url.replace("'","''")
+                if(url[url.length-1]=="/"){
+                    url=url.slice(0,-1)
+                }
+                url=url.replace(/'/g,"''")
                 esegui("insert into news (title,description,image,url) values ('"+title+"','"+description+"','"+image+"','"+url+"');")
             }
         }, {

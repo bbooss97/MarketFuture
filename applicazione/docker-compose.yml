@@ -1,9 +1,7 @@
-# Use root/example as user/password credentials
 version: '3.1'
-
 services:
+
   db:
-    # network_mode: host
     image: mysql
     container_name: "db"
     command: --default-authentication-plugin=mysql_native_password
@@ -15,7 +13,6 @@ services:
     volumes:
       - volume:/mysql
 
-
   adminer:
     container_name: "adminer"
     image: adminer
@@ -24,7 +21,6 @@ services:
       - 8080:8080
     volumes:
       - volume:/adminer
-
 
   backend:
     container_name: "backend"
@@ -50,7 +46,6 @@ services:
     volumes:
       - volume:/fakedetector
 
-
   stockpredictor:
     image: bbooss97/stockpredictorimage:latest
     container_name: "stockpredictor"
@@ -62,7 +57,6 @@ services:
     volumes:
       - volume:/stockpredictor
 
-
   rabbitmq:
     container_name: 'rabbitmq'
     image: rabbitmq:3-management-alpine
@@ -72,7 +66,6 @@ services:
     volumes:
       - volume:/rabbitmq
 
-      
 volumes:
   volume:
 

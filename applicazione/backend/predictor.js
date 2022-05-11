@@ -6,7 +6,6 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-//data=httpGet("http://localhost:8000/data.json")
 function prendistock(nomeStock){
     data=httpGet("http://localhost:5000/getStock/"+nomeStock)
     data=JSON.parse(data)
@@ -51,7 +50,7 @@ function prendistock(nomeStock){
         x.push(nuovoFormato)
         y.push(dati[i][1])
     }
-    //console.log(y)
+
     prova={"x":x,"y":y,"type":"scatter"}
     var z = []
     for (var i=0;i < x.length; i++){
@@ -131,7 +130,7 @@ function changeListStock(){
 changeListStock()
 
 versione=0
-//selettore
+//selector
 document.getElementById("bottonePredict").addEventListener("click",function(){
     versione++
     selettore= document.getElementById("selettore")
